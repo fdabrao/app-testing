@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { CategoryService } from '../../services/category.service';
 import { Category } from '../../models/category.model';
@@ -10,7 +9,7 @@ import { Category } from '../../models/category.model';
 @Component({
   selector: 'app-category',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './category.component.html',
   styleUrls: ['./category.component.scss']
 })
@@ -65,12 +64,11 @@ export class CategoryComponent implements OnInit {
     this.categoryService.getCategories().subscribe({
       next: (data) => {
         this.categories = data;
-        this.parentCategories = [...data]; // Copy for parent category selection
+        this.parentCategories = [...data];
         this.isLoading = false;
       },
       error: (error) => {
         if (error.message === 'Your session has expired. Please login again.') {
-          // This will be handled by the CategoryService's error handler
           this.isLoading = false;
         } else {
           this.errorMessage = 'Failed to load categories. Please try again.';
@@ -195,9 +193,7 @@ export class CategoryComponent implements OnInit {
   }
 
   logout(): void {
-    // Use auth service to logout
     this.authService.logout();
-    // Navigate back to login page
     this.router.navigate(['/login']);
   }
 } 

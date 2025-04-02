@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
 import { AuthService } from '../../services/auth.service';
 import { ProductService } from '../../services/product.service';
 import { CategoryService } from '../../services/category.service';
@@ -12,10 +11,10 @@ import { Category } from '../../models/category.model';
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, FormsModule, HttpClientModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss'],
-  providers: []  // AuthService, ProductService, and CategoryService are already provided at root
+  providers: []
 })
 export class HomeComponent implements OnInit {
   username: string = '';
@@ -76,12 +75,11 @@ export class HomeComponent implements OnInit {
     this.productService.getProducts().subscribe({
       next: (data) => {
         this.products = data;
-        this.applyFiltersAndSort(); // Apply initial filtering and sorting
+        this.applyFiltersAndSort();
         this.isLoading = false;
       },
       error: (error) => {
         if (error.message === 'Your session has expired. Please login again.') {
-          // This will be handled by the ProductService's error handler
           this.isLoading = false;
         } else {
           this.errorMessage = 'Failed to load products. Please try again.';
@@ -103,7 +101,6 @@ export class HomeComponent implements OnInit {
       },
       error: (error) => {
         if (error.message === 'Your session has expired. Please login again.') {
-          // This will be handled by the CategoryService's error handler
           this.isLoading = false;
         } else {
           this.errorMessage = 'Failed to load categories. Please try again.';
@@ -233,18 +230,13 @@ export class HomeComponent implements OnInit {
   }
 
   logout(): void {
-    // Use auth service to logout
     this.authService.logout();
-    // Navigate back to login page
     this.router.navigate(['/login']);
   }
 
   // Filtering and sorting methods
   applyFiltersAndSort(): void {
-    // First filter the products
     this.filteredProducts = this.filterProducts();
-    
-    // Then sort the filtered products
     this.sortProducts();
   }
   
@@ -306,11 +298,9 @@ export class HomeComponent implements OnInit {
   }
   
   setSortField(field: string): void {
-    // If clicking the same field, toggle direction
     if (this.sortField === field) {
       this.sortDirection = this.sortDirection === 'asc' ? 'desc' : 'asc';
     } else {
-      // New field, set to ascending by default
       this.sortField = field;
       this.sortDirection = 'asc';
     }
