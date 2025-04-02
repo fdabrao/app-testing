@@ -1,0 +1,64 @@
+# Set default behavior to automatically normalize line endings
+* text=auto
+
+# Explicitly declare text files that should be normalized
+*.java text
+*.html text
+*.css text
+*.js text
+*.ts text
+*.json text
+*.xml text
+*.yml text
+*.yaml text
+*.properties text
+*.md text
+*.txt text
+*.sql text
+
+# Define binary files that should not be modified
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.mov binary
+*.mp4 binary
+*.mp3 binary
+*.flv binary
+*.fla binary
+*.swf binary
+*.gz binary
+*.zip binary
+*.7z binary
+*.ttf binary
+*.eot binary
+*.woff binary
+*.woff2 binary
+*.pyc binary
+*.pdf binary
+*.jar binary
+*.war binary
+*.ear binary
+*.class binary
+
+# Handle executable files correctly
+*.sh text eol=lf
+*.bat text eol=crlf
+*.cmd text eol=crlf
+mvnw text eol=lf
+gradlew text eol=lf
+
+# Make sure GitHub linguist doesn't ignore these files
+*.ts linguist-detectable=true
+*.java linguist-detectable=true
+*.html linguist-detectable=true
+*.scss linguist-detectable=true
+*.css linguist-detectable=true
+
+# Exclude from GitHub stats
+**/node_modules/** linguist-vendored
+**/dist/** linguist-vendored
+**/target/** linguist-vendored
+**/build/** linguist-vendored
+**/.angular/** linguist-vendored 
