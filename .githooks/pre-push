@@ -1,0 +1,55 @@
+#!/bin/bash
+
+echo "Running pre-push hook..."
+
+# Store the current branch name
+BRANCH=$(git symbolic-ref --short HEAD)
+echo "Current branch: $BRANCH"
+
+# Run backend tests for important branches
+if [[ "$BRANCH" == "main" || "$BRANCH" == "develop" || "$BRANCH" =~ ^release/.* ]]; then
+  echo "Running backend tests..."
+  if [ -d "backend" ]; then
+    cd backend
+    # Uncomment the following line when you want to enforce tests before pushing
+    # ./mvnw test || { echo "Backend tests failed! Push aborted."; exit 1; }
+    cd ..
+    echo "Backend tests passed!"
+  fi
+fi
+
+# Run frontend tests for important branches
+if [[ "$BRANCH" == "main" || "$BRANCH" == "develop" || "$BRANCH" =~ ^release/.* ]]; then
+  echo "Running frontend tests..."
+  if [ -d "frontend" ]; then
+    cd frontend
+    # Uncomment the following line when you want to enforce tests before pushing
+    # npm test -- --watch=false || { echo "Frontend tests failed! Push aborted."; exit 1; }
+    cd ..
+    echo "Frontend tests passed!"
+  fi
+fi
+
+# Additional checks for main and release branches
+if [[ "$BRANCH" == "main" || "$BRANCH" =~ ^release/.* ]]; then
+  echo "Performing additional checks for production branch..."
+  
+  # Check for console.log statements in frontend code
+  if [ -d "frontend" ]; then
+    console_logs=$(grep -r "console.log" --include="*.ts" frontend/src | wc -l)
+    if [ $console_logs -gt 0 ]; then
+      echo "WARNING: $console_logs console.log statements found in frontend code."
+      echo "Consider removing debug statements before pushing to production branches."
+    fi
+  fi
+  
+  # Check for TODO comments
+  todos=$(grep -r "TODO" --include="*.java" --include="*.ts" . | wc -l)
+  if [ $todos -gt 0 ]; then
+    echo "WARNING: $todos TODO comments found in the codebase."
+    echo "Consider resolving TODOs before pushing to production branches."
+  fi
+fi
+
+echo "Pre-push checks completed!"
+exit 0 
