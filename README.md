@@ -1,169 +1,74 @@
-# Product Management System
+# This is the project test for QIMA hiring process
 
-A full-stack application for managing product categories and inventory, built with Spring Boot backend and Angular frontend.
+This project are based in test requirements to create a fullstack product management with frontend, backend and database.
 
-## Project Structure
+## 1. Setup Environment
 
-The project is organized into two main components:
+Make sure you have Java 17+ and a [compatible Docker environment](https://www.testcontainers.org/supported_docker_environment/) installed.
 
-- **Backend**: Spring Boot application providing RESTful APIs
-- **Frontend**: Angular 19 application for the user interface
+For example:
 
-## Technologies Used
-
-### Backend
-- Java 17
-- Spring Boot
-- Spring Data JPA
-- Spring Security with JWT
-- H2 Database (for development)
-- Maven
-
-### Frontend
-- Angular 19
-- TypeScript
-- RxJS
-- SCSS for styling
-- Cypress for E2E testing
-
-## Getting Started
-
-### Prerequisites
-- Java 17 or higher
-- Node.js (v18 or higher)
-- npm (v9 or higher)
-- Git
-
-### Clone the Repository
-
-```bash
-git clone <repository-url>
-cd product-management-system
+```shell
+$ java --version
+openjdk version "17.0.4" 2022-07-19
+OpenJDK Runtime Environment Temurin-17.0.4+8 (build 17.0.4+8)
+OpenJDK 64-Bit Server VM Temurin-17.0.4+8 (build 17.0.4+8, mixed mode, sharing)
+$ docker version
+...
+Server: Docker Desktop 4.12.0 (85629)
+ Engine:
+  Version:          20.10.17
+  API version:      1.41 (minimum version 1.12)
+  Go version:       go1.17.11
+...
 ```
 
-### Running the Backend
+## 2. Setup Project
 
-Navigate to the backend directory and start the Spring Boot application:
+* Clone the repository
 
-```bash
-cd backend
-./mvnw spring-boot:run
+```shell
+git clone https://github.com/fdbrao/app-testing.git
+cd app-testing
 ```
 
-The backend server will start on http://localhost:8080.
+## 3. Run Tests
 
-### Running the Frontend
+Run the command to run all the tests.
 
-Open a new terminal, navigate to the frontend directory, and start the Angular application:
-
-```bash
-cd frontend
-npm install
-npm start
+```shell
+$ ./run-tests.sh --all
 ```
 
-The frontend application will be available at http://localhost:4200.
+The tests should pass with end up this:
 
-### Running with the Start Script
+> [INFO] Tests run: X, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 8.530 s -- in com.fdabrao.app.controller.AuthControllerIntegrationTest
+> [INFO]
+> [INFO] Results:
+> [INFO]
+> [INFO] Tests run: XX, Failures: 0, Errors: 0, Skipped: 0
+> [INFO]
+> [INFO] ------------------------------------------------------------------------
+> [INFO] BUILD SUCCESS
+> [INFO] -----------------------------------------------------------------------
+> [INFO] Total time: XX s
+> [INFO] Finished at: XXXX-XX-XXTXX:XX:XX-XX:XX
+> [INFO] ------------------------------------------------------------------------
 
-Alternatively, you can use the provided script to start both applications:
+## 4. Run System
 
-```bash
-# On Windows
-start-system.bat
+Run the command to run the system.
 
-# On Linux/macOS
-./start-system.sh
+```shell
+$ ./start-system.sh
 ```
 
-## Testing
+CTRL+C to stop
 
-### Backend Tests
+To access the system, open http://localhost:4200 in browser.
 
-```bash
-cd backend
-./mvnw test
-```
+Use this credential: username: admin / password: admin
 
-### Frontend Unit Tests
+# Development minor informations
 
-```bash
-cd frontend
-npm test
-```
-
-### End-to-End Tests
-
-```bash
-cd frontend
-npm run cypress:open   # For interactive testing
-npm run cypress:run    # For headless testing
-```
-
-## Development Guidelines
-
-### Git Workflow
-
-1. Create a feature branch from `main`:
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-
-2. Make your changes and commit them with meaningful messages:
-   ```bash
-   git add .
-   git commit -m "Add description of changes"
-   ```
-
-3. Push your branch and create a pull request:
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-
-### Code Style
-
-- **Backend**: Follow the Google Java Style Guide
-- **Frontend**: Follow the Angular style guide
-
-## Deployment
-
-### Backend
-
-Build the JAR file:
-
-```bash
-cd backend
-./mvnw clean package
-```
-
-The JAR file will be available in the `target` directory.
-
-### Frontend
-
-Build the production version:
-
-```bash
-cd frontend
-npm run build
-```
-
-The compiled output will be available in the `dist` directory.
-
-## Environment Configuration
-
-### Backend
-
-Configuration files are located in:
-- `src/main/resources/application.properties` (or `application.yml`)
-
-For production, create a separate `application-prod.properties` file.
-
-### Frontend
-
-Environment configurations are in:
-- `src/environments/environment.ts` (development)
-- `src/environments/environment.prod.ts` (production)
-
-## License
-
-[Your License Information]
+The project has only the integration test because we do not have business validation. So, no unit test.
