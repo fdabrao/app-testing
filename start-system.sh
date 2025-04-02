@@ -49,8 +49,6 @@ docker-compose down -v
 docker-compose up -d
 cd ..
 
-# Wait for PostgreSQL to be ready (port 5432)
-# wait_for_service 5432 "PostgreSQL" 30
 sleep 5
 
 # Step 2: Start the backend
@@ -66,6 +64,7 @@ wait_for_service 8080 "Backend" 60
 # Step 3: Start the frontend
 echo -e "\n${YELLOW}STEP 3: Starting Frontend (Angular)...${NC}"
 cd frontend
+npm install
 npm start &
 FRONTEND_PID=$!
 cd ..

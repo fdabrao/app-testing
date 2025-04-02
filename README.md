@@ -28,7 +28,7 @@ Server: Docker Desktop 4.12.0 (85629)
 * Clone the repository
 
 ```shell
-git clone https://github.com/fdbrao/app-testing.git
+git clone https://github.com/fdabrao/app-testing.git
 cd app-testing
 ```
 
